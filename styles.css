@@ -79,6 +79,17 @@ body {
     border-radius: 8px;
     padding: 1rem 0.75rem;
     text-align: center;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.advertise-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary);
 }
 
 .advertise-icon {
@@ -675,8 +686,14 @@ footer a:hover {
         gap: 1rem;
     }
 
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .leaderboard-table {
         font-size: 0.85rem;
+        min-width: 600px;
     }
 
     .leaderboard-table th,
