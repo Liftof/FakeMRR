@@ -622,6 +622,17 @@ footer p {
     color: var(--text-muted);
 }
 
+footer a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
     body {
