@@ -7,6 +7,74 @@ class FakeMRR {
         this.init();
     }
 
+    // Content moderation - Filter hate speech (client-side protection)
+    containsHateSpeech(text) {
+        if (!text) return false;
+
+        const normalizedText = text.toLowerCase();
+
+        // List of prohibited slurs and hate speech patterns
+        const hateSpeechPatterns = [
+            // Racial slurs
+            'nigger', 'nigga', 'n1gger', 'n1gga', 'nig', 'coon', 'chink', 'gook', 'spic', 'wetback', 'beaner', 'towelhead', 'sand nigger', 'paki', 'curry muncher', 'cracker',
+            // Anti-Semitic slurs
+            'kike', 'yid', 'heeb', 'jew down', 'jewboy',
+            // Homophobic slurs
+            'faggot', 'fag', 'f4ggot', 'dyke', 'tranny', 'tr4nny',
+            // Other hate speech
+            'hitler', 'nazi', 'kkk', 'white power', 'white supremacy', 'race traitor', 'genocide', 'gas the',
+            // Common obfuscation attempts
+            'n!gger', 'n*gger', 'f@ggot', 'f@g',
+        ];
+
+        // Check for exact matches and partial matches
+        for (const pattern of hateSpeechPatterns) {
+            if (normalizedText.includes(pattern)) {
+                return true;
+            }
+        }
+
+        // Check for character substitution patterns (l33t speak)
+        const l33tSubstitutions = normalizedText
+            .replace(/0/g, 'o')
+            .replace(/1/g, 'i')
+            .replace(/3/g, 'e')
+            .replace(/4/g, 'a')
+            .replace(/5/g, 's')
+            .replace(/7/g, 't')
+            .replace(/!/g, 'i')
+            .replace(/@/g, 'a')
+            .replace(/\$/g, 's')
+            .replace(/\*/g, '')
+            .replace(/\./g, '');
+
+        for (const pattern of hateSpeechPatterns) {
+            if (l33tSubstitutions.includes(pattern)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Check if startup contains any hateful content
+    isContentSafe(startup) {
+        const fieldsToCheck = [
+            startup.companyName,
+            startup.founderName,
+            startup.twitter,
+            startup.website
+        ];
+
+        for (const field of fieldsToCheck) {
+            if (this.containsHateSpeech(field)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     async init() {
         this.setupEventListeners();
         await this.loadStartups();
@@ -104,9 +172,13 @@ class FakeMRR {
                 throw new Error(data.error || 'Failed to add startup');
             }
 
-            // Add to local array
-            this.startups.push(data.startup);
-            this.renderTable();
+            // Double-check content safety before adding to local array
+            if (this.isContentSafe(data.startup)) {
+                this.startups.push(data.startup);
+                this.renderTable();
+            } else {
+                console.warn('Blocked unsafe content from being displayed');
+            }
 
             // Save submission timestamp for rate limiting
             localStorage.setItem('fakeMRR_lastSubmit', Date.now().toString());
@@ -341,7 +413,14 @@ class FakeMRR {
             const data = await response.json();
 
             if (data.success && data.startups) {
-                this.startups = data.startups;
+                // Filter out any hateful content from existing database entries
+                this.startups = data.startups.filter(startup => this.isContentSafe(startup));
+
+                // Log filtered entries (for admin awareness)
+                const filteredCount = data.startups.length - this.startups.length;
+                if (filteredCount > 0) {
+                    console.warn(`Filtered ${filteredCount} entries containing prohibited content`);
+                }
             } else {
                 console.error('Failed to load startups:', data);
                 this.showToast('Failed to load startups', 'error');
