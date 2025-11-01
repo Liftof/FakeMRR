@@ -7,6 +7,77 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 };
 
+// Content moderation - Filter hate speech and offensive content
+function containsHateSpeech(text) {
+  if (!text) return false;
+
+  const normalizedText = text.toLowerCase();
+
+  // List of prohibited slurs and hate speech patterns
+  const hateSpeechPatterns = [
+    // Racial slurs
+    'nigger', 'nigga', 'n1gger', 'n1gga', 'nig', 'coon', 'chink', 'gook', 'spic', 'wetback', 'beaner', 'towelhead', 'sand nigger', 'paki', 'curry muncher', 'cracker',
+    // Anti-Semitic slurs
+    'kike', 'yid', 'heeb', 'jew down', 'jewboy',
+    // Homophobic slurs
+    'faggot', 'fag', 'f4ggot', 'dyke', 'tranny', 'tr4nny',
+    // Other hate speech
+    'hitler', 'nazi', 'kkk', 'white power', 'white supremacy', 'race traitor', 'genocide', 'gas the',
+    // Common obfuscation attempts
+    'n!gger', 'n*gger', 'f@ggot', 'f@g',
+  ];
+
+  // Check for exact matches and partial matches
+  for (const pattern of hateSpeechPatterns) {
+    if (normalizedText.includes(pattern)) {
+      return true;
+    }
+  }
+
+  // Check for character substitution patterns (l33t speak)
+  const l33tSubstitutions = normalizedText
+    .replace(/0/g, 'o')
+    .replace(/1/g, 'i')
+    .replace(/3/g, 'e')
+    .replace(/4/g, 'a')
+    .replace(/5/g, 's')
+    .replace(/7/g, 't')
+    .replace(/!/g, 'i')
+    .replace(/@/g, 'a')
+    .replace(/\$/g, 's')
+    .replace(/\*/g, '')
+    .replace(/\./g, '');
+
+  for (const pattern of hateSpeechPatterns) {
+    if (l33tSubstitutions.includes(pattern)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function moderateContent(data) {
+  const fieldsToCheck = [
+    { field: 'companyName', value: data.companyName },
+    { field: 'founderName', value: data.founderName },
+    { field: 'twitter', value: data.twitter },
+    { field: 'website', value: data.website }
+  ];
+
+  for (const { field, value } of fieldsToCheck) {
+    if (containsHateSpeech(value)) {
+      return {
+        passed: false,
+        field: field,
+        message: 'Content contains prohibited language and has been blocked'
+      };
+    }
+  }
+
+  return { passed: true };
+}
+
 export default async function handler(req, res) {
   // Handle preflight
   if (req.method === 'OPTIONS') {
@@ -49,6 +120,15 @@ export default async function handler(req, res) {
         return res.status(400).json({
           success: false,
           error: 'Missing required fields: companyName, founderName, totalRevenue'
+        });
+      }
+
+      // Content moderation - Block hate speech and offensive content
+      const moderationResult = moderateContent(req.body);
+      if (!moderationResult.passed) {
+        return res.status(400).json({
+          success: false,
+          error: moderationResult.message
         });
       }
 
