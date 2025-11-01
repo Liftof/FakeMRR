@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 
 // CORS headers
 const corsHeaders = {
@@ -13,10 +13,13 @@ export default async function handler(req, res) {
     return res.status(200).json({});
   }
 
+  // Initialize Neon client
+  const sql = neon(process.env.DATABASE_URL);
+
   try {
     // GET - Fetch all startups
     if (req.method === 'GET') {
-      const { rows } = await sql`
+      const rows = await sql`
         SELECT
           id,
           company_name as "companyName",
@@ -53,7 +56,7 @@ export default async function handler(req, res) {
       const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown';
       const oneMinuteAgo = new Date(Date.now() - 60000).toISOString();
 
-      const { rows: recentSubmissions } = await sql`
+      const recentSubmissions = await sql`
         SELECT COUNT(*) as count
         FROM startups
         WHERE created_at > ${oneMinuteAgo}
@@ -69,7 +72,7 @@ export default async function handler(req, res) {
       }
 
       // Insert into database
-      const { rows } = await sql`
+      const rows = await sql`
         INSERT INTO startups (
           company_name,
           founder_name,
@@ -120,7 +123,3 @@ export default async function handler(req, res) {
     });
   }
 }
-
-export const config = {
-  runtime: 'edge',
-};
