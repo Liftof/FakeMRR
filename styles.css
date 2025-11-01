@@ -648,72 +648,255 @@ footer a:hover {
 @media (max-width: 1200px) {
     body {
         grid-template-columns: 1fr;
+        padding: 1.5rem 1rem;
     }
 
     .sidebar-left,
     .sidebar-right {
         display: none;
     }
+
+    .main-content {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
     body {
-        padding: 1rem;
+        padding: 1rem 0.5rem;
+    }
+
+    header {
+        margin-bottom: 2rem;
+    }
+
+    .header-logo {
+        font-size: 1.1rem;
+    }
+
+    .logo-icon {
+        font-size: 1.3rem;
+    }
+
+    .hero {
+        margin-bottom: 2rem;
     }
 
     .hero h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
     }
 
     .search-container {
         flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .search-box input {
+        font-size: 0.9rem;
+        padding: 0.65rem 1rem 0.65rem 2.5rem;
     }
 
     .action-buttons {
         width: 100%;
-        flex-direction: column;
+        flex-direction: row;
+        gap: 0.5rem;
     }
 
     .add-btn,
     .share-site-btn {
-        width: 100%;
+        flex: 1;
         justify-content: center;
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .leaderboard-section {
+        margin-bottom: 2rem;
     }
 
     .leaderboard-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .leaderboard-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .leaderboard-filters {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .filter-dropdown {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.8rem;
     }
 
     .table-container {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        margin: 0 -0.5rem;
+        border-radius: 8px;
     }
 
     .leaderboard-table {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         min-width: 600px;
     }
 
-    .leaderboard-table th,
-    .leaderboard-table td {
+    .leaderboard-table th {
         padding: 0.75rem 0.5rem;
-    }
-
-    .startup-logo {
-        width: 32px;
-        height: 32px;
-        font-size: 1rem;
-    }
-
-    .startup-url,
-    .founder-handle {
         font-size: 0.75rem;
     }
 
+    .leaderboard-table td {
+        padding: 0.65rem 0.5rem;
+    }
+
+    .rank-cell {
+        font-size: 0.85rem;
+    }
+
+    .startup-cell {
+        gap: 0.5rem;
+    }
+
+    .startup-logo {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    .startup-name {
+        font-size: 0.85rem;
+    }
+
+    .startup-url {
+        font-size: 0.7rem;
+    }
+
+    .founder-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .founder-handle {
+        font-size: 0.7rem;
+    }
+
+    .revenue-cell,
+    .mrr-cell {
+        font-size: 0.85rem;
+    }
+
+    .share-btn {
+        font-size: 1rem;
+        padding: 0.35rem;
+    }
+
+    .empty-state {
+        padding: 2rem 1rem;
+        font-size: 0.85rem;
+    }
+
     .modal-content {
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
+        width: 95%;
+        max-height: 85vh;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+        padding-right: 2rem;
+    }
+
+    .modal-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-step {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .form-input {
+        padding: 0.65rem;
+        font-size: 0.9rem;
+    }
+
+    .form-hint {
+        font-size: 0.75rem;
+    }
+
+    .submit-btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.95rem;
+    }
+
+    .info-notice {
+        font-size: 0.8rem;
+        padding: 0.85rem;
+    }
+
+    footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .footer-small {
+        font-size: 0.75rem;
+    }
+
+    .toast {
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        padding: 0.85rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.35rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .add-btn,
+    .share-site-btn {
+        width: 100%;
+    }
+
+    .leaderboard-table {
+        font-size: 0.75rem;
+        min-width: 550px;
+    }
+
+    .startup-name {
+        font-size: 0.8rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.35rem;
     }
 }
 
