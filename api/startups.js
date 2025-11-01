@@ -52,26 +52,28 @@ export default async function handler(req, res) {
         });
       }
 
-      // Rate limiting - check recent submissions (last 1 minute)
-      const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown';
-      const oneMinuteAgo = new Date(Date.now() - 60000).toISOString();
+      // Rate limiting - Per-IP: max 5 submissions per hour
+      // Get real client IP (Vercel passes this in x-forwarded-for header)
+      const forwardedFor = req.headers['x-forwarded-for'];
+      const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : req.headers['x-real-ip'] || 'unknown';
+      const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
 
-      const recentSubmissions = await sql`
+      const ipSubmissions = await sql`
         SELECT COUNT(*) as count
         FROM startups
-        WHERE created_at > ${oneMinuteAgo}
-        LIMIT 1
+        WHERE client_ip = ${clientIp}
+        AND created_at > ${oneHourAgo}
       `;
 
-      // Simple rate limit: max 1 submission per minute globally
-      if (recentSubmissions[0]?.count > 0) {
+      // Per-IP rate limit: max 5 submissions per hour
+      if (ipSubmissions[0]?.count >= 5) {
         return res.status(429).json({
           success: false,
-          error: 'Rate limit exceeded. Please wait a moment before submitting again.'
+          error: 'Rate limit exceeded. Maximum 5 submissions per hour per user.'
         });
       }
 
-      // Insert into database
+      // Insert into database with client IP for rate limiting
       const rows = await sql`
         INSERT INTO startups (
           company_name,
@@ -80,7 +82,8 @@ export default async function handler(req, res) {
           website,
           mrr,
           total_revenue,
-          growth_rate
+          growth_rate,
+          client_ip
         ) VALUES (
           ${companyName},
           ${founderName},
@@ -88,7 +91,8 @@ export default async function handler(req, res) {
           ${website || ''},
           ${mrr || 0},
           ${totalRevenue},
-          ${growthRate || 0}
+          ${growthRate || 0},
+          ${clientIp}
         )
         RETURNING
           id,
