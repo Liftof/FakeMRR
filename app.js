@@ -15,12 +15,12 @@ class FakeMRR {
 
         // List of prohibited slurs and hate speech patterns
         const hateSpeechPatterns = [
-            // Racial slurs
-            'nigger', 'nigga', 'n1gger', 'n1gga', 'nig', 'coon', 'chink', 'gook', 'spic', 'wetback', 'beaner', 'towelhead', 'sand nigger', 'paki', 'curry muncher', 'cracker',
+            // Racial slurs (removed 'nig' to avoid false positives with 'Nigeria', 'knight', etc.)
+            'nigger', 'nigga', 'n1gger', 'n1gga', ' nig ', 'coon', 'chink', 'gook', 'spic', 'wetback', 'beaner', 'towelhead', 'sand nigger', 'paki', 'curry muncher',
             // Anti-Semitic slurs
             'kike', 'yid', 'heeb', 'jew down', 'jewboy',
-            // Homophobic slurs
-            'faggot', 'fag', 'f4ggot', 'dyke', 'tranny', 'tr4nny',
+            // Homophobic slurs (removed 'fag' to avoid false positives)
+            'faggot', 'f4ggot', 'dyke', 'tranny', 'tr4nny',
             // Other hate speech
             'hitler', 'nazi', 'kkk', 'white power', 'white supremacy', 'race traitor', 'genocide', 'gas the',
             // Common obfuscation attempts
