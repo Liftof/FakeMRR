@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FakeMRR - The database of unverified startup revenues</title>
+    <meta name="description" content="The first public database of completely unverified startup revenues. No Stripe required. Trust me bro.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar Sponsors -->
+    <aside class="sidebar-left">
+        <div class="sponsor-card" style="background-color: #E0E7FF;">
+            <div class="sponsor-icon">🎭</div>
+            <h3>TrustMeBro</h3>
+            <p>Verify nothing. Claim everything.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #FEF9C3;">
+            <div class="sponsor-icon">🚀</div>
+            <h3>HustleMax</h3>
+            <p>Fake it till you... keep faking it.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #FFE4E6;">
+            <div class="sponsor-icon">💰</div>
+            <h3>VaporwareLLC</h3>
+            <p>Ideas so good they don't need to exist.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #DBEAFE;">
+            <div class="sponsor-icon">📈</div>
+            <h3>ChartGPT</h3>
+            <p>AI-generated hockey stick graphs.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #E9D5FF;">
+            <div class="sponsor-icon">🎪</div>
+            <h3>CircusCoin</h3>
+            <p>Blockchain meets performance art.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #D1FAE5;">
+            <div class="sponsor-icon">🤡</div>
+            <h3>ClownMetrics</h3>
+            <p>Analytics for the modern grifter.</p>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header>
+            <div class="header-logo">
+                <span class="logo-icon">⭐</span>
+                <span class="logo-text">FakeMRR</span>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>The database of unverified startup revenues</h1>
+            <p class="hero-subtitle">All revenue is self-reported. No verification needed. Data is never updated. Trust me bro.</p>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search startups or founders...">
+                </div>
+                <div class="action-buttons">
+                    <button class="share-site-btn" onclick="fakeMRR.shareSite()" title="Share FakeMRR">
+                        📤 Share
+                    </button>
+                    <button class="add-btn" id="openModalBtn">
+                        <span>+</span> Add startup
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h2>Leaderboard</h2>
+                <div class="leaderboard-filters">
+                    <select id="sortFilter" class="filter-dropdown">
+                        <option value="revenue">Revenue</option>
+                        <option value="mrr">MRR</option>
+                        <option value="growth">Growth</option>
+                    </select>
+                    <select id="timeFilter" class="filter-dropdown">
+                        <option value="all">All time</option>
+                        <option value="month">This month</option>
+                        <option value="week">This week</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Startup</th>
+                            <th>Founder</th>
+                            <th class="text-right">Revenue</th>
+                            <th class="text-right">MRR</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardBody">
+                        <tr class="empty-row">
+                            <td colspan="6" class="empty-state">
+                                No fake startups yet. Be the first to claim unrealistic revenue!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>FakeMRR - Where dreams become "data" 💭</p>
+            <p class="footer-small">This is satire. A parody of revenue-flexing culture. Not affiliated with any real revenue tracking service.</p>
+            <p class="footer-small">Built with irony and HTML. No Stripe API was harmed in the making of this website.</p>
+        </footer>
+    </main>
+
+    <!-- Right Sidebar Sponsors -->
+    <aside class="sidebar-right">
+        <div class="sponsor-card" style="background-color: #FEE2E2;">
+            <div class="sponsor-icon">✨</div>
+            <h3>Mocku</h3>
+            <p>Your AI design tool for fake screenshots.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #E0F2FE;">
+            <div class="sponsor-icon">📧</div>
+            <h3>Inbound</h3>
+            <p>Send emails to yourself. Premium tier.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #FEF3C7;">
+            <div class="sponsor-icon">🎯</div>
+            <h3>Rewardless</h3>
+            <p>Affiliate program with 0% commission.</p>
+        </div>
+
+        <div class="sponsor-card" style="background-color: #E9D5FF;">
+            <div class="sponsor-icon">🤖</div>
+            <h3>Replybot</h3>
+            <p>AI replies that make no sense.</p>
+        </div>
+
+        <div class="advertise-card">
+            <div class="advertise-icon">📢</div>
+            <p class="advertise-text">Advertise</p>
+            <p class="advertise-spots">0/20 spots left</p>
+        </div>
+    </aside>
+
+    <!-- Modal -->
+    <div id="addStartupModal" class="modal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+            <h2>Add your startup</h2>
+            <p class="modal-subtitle">Get a dedicated page on FakeMRR to showcase your startup's imaginary revenue. And nice dofollow backlink 😉 (just kidding, there's no backlink)</p>
+
+            <form id="startupForm">
+                <div class="form-step">
+                    <label class="form-label">1. Company name*</label>
+                    <input type="text" id="companyName" class="form-input" placeholder="TotallyRealCorp" required maxlength="100">
+                    <small class="form-hint">The more buzzwords, the better</small>
+                </div>
+
+                <div class="form-step">
+                    <label class="form-label">2. Founder name*</label>
+                    <input type="text" id="founderName" class="form-input" placeholder="Elon Jobs" required maxlength="100">
+                    <small class="form-hint">Your name or an alter ego</small>
+                </div>
+
+                <div class="form-step">
+                    <label class="form-label">3. X handle (optional)</label>
+                    <input type="text" id="twitter" class="form-input" placeholder="username" maxlength="15">
+                    <small class="form-hint">Without @ - we'll show your profile pic if it exists</small>
+                </div>
+
+                <div class="form-step">
+                    <label class="form-label">4. Website (optional)</label>
+                    <input type="url" id="website" class="form-input" placeholder="https://yoursite.com">
+                    <small class="form-hint">We'll fetch the favicon automatically</small>
+                </div>
+
+                <div class="form-step">
+                    <label class="form-label">5. Total Revenue* ($)</label>
+                    <input type="number" id="totalRevenue" class="form-input" placeholder="9999999" min="0" step="1" required>
+                    <small class="form-hint">Dream big! No one's checking anyway</small>
+                </div>
+
+                <div class="form-step">
+                    <label class="form-label">6. Monthly Recurring Revenue* (MRR in $)</label>
+                    <input type="number" id="mrr" class="form-input" placeholder="999999" min="0" step="1" required>
+                    <small class="form-hint">Make it believable... or don't</small>
+                </div>
+
+                <div class="form-step">
+                    <label class="form-label">7. Monthly Growth Rate (%)</label>
+                    <input type="number" id="growthRate" class="form-input" placeholder="420" min="0" max="99999">
+                    <small class="form-hint">Optional but encouraged for maximum flex</small>
+                </div>
+
+                <button type="submit" class="submit-btn">Add startup</button>
+            </form>
+
+            <div class="info-notice">
+                <p><strong>⚠️ Disclaimer:</strong> This is a parody website. All data is unverified and should not be trusted for any real business decisions.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "fakemrr",
+  "version": "1.0.0",
+  "description": "The database of unverified startup revenues",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel"
+  },
+  "dependencies": {
+    "@vercel/postgres": "^0.5.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18"
+  }
+}
