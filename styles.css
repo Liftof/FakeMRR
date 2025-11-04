@@ -645,6 +645,8 @@ footer a:hover {
 }
 
 /* Responsive Design */
+
+/* Large tablets and small desktops - 1200px */
 @media (max-width: 1200px) {
     body {
         grid-template-columns: 1fr;
@@ -661,9 +663,25 @@ footer a:hover {
     }
 }
 
+/* Medium tablets - 900px */
+@media (max-width: 900px) {
+    body {
+        padding: 1.25rem 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+}
+
+/* Small tablets - 768px */
 @media (max-width: 768px) {
     body {
-        padding: 1rem 0.5rem;
+        padding: 1rem;
     }
 
     header {
@@ -683,8 +701,8 @@ footer a:hover {
     }
 
     .hero h1 {
-        font-size: 1.5rem;
-        line-height: 1.3;
+        font-size: 1.75rem;
+        line-height: 1.25;
         margin-bottom: 0.75rem;
     }
 
@@ -699,22 +717,29 @@ footer a:hover {
     }
 
     .search-box input {
-        font-size: 0.9rem;
-        padding: 0.65rem 1rem 0.65rem 2.5rem;
+        font-size: 1rem;
+        padding: 0.75rem 1rem 0.75rem 2.75rem;
+        min-height: 48px;
+    }
+
+    .search-icon {
+        left: 1rem;
+        font-size: 1.1rem;
     }
 
     .action-buttons {
         width: 100%;
         flex-direction: row;
-        gap: 0.5rem;
+        gap: 0.75rem;
     }
 
     .add-btn,
     .share-site-btn {
         flex: 1;
         justify-content: center;
-        padding: 0.65rem 1rem;
-        font-size: 0.85rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        min-height: 48px;
     }
 
     .leaderboard-section {
@@ -729,100 +754,204 @@ footer a:hover {
     }
 
     .leaderboard-header h2 {
-        font-size: 1.25rem;
+        font-size: 1.35rem;
     }
 
     .leaderboard-filters {
         width: 100%;
-        justify-content: flex-start;
-    }
-
-    .filter-dropdown {
-        padding: 0.45rem 0.65rem;
-        font-size: 0.8rem;
-    }
-
-    .table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        margin: 0 -0.5rem;
-        border-radius: 8px;
-    }
-
-    .leaderboard-table {
-        font-size: 0.8rem;
-        min-width: 600px;
-    }
-
-    .leaderboard-table th {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.75rem;
-    }
-
-    .leaderboard-table td {
-        padding: 0.65rem 0.5rem;
-    }
-
-    .rank-cell {
-        font-size: 0.85rem;
-    }
-
-    .startup-cell {
         gap: 0.5rem;
     }
 
-    .startup-logo {
-        width: 28px;
-        height: 28px;
-        font-size: 0.9rem;
+    .filter-dropdown {
+        flex: 1;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.875rem;
+        min-height: 44px;
     }
 
-    .startup-name {
-        font-size: 0.85rem;
+    /* Card-based layout for table on mobile */
+    .table-container {
+        background: transparent;
+        box-shadow: none;
+        border-radius: 0;
     }
 
-    .startup-url {
-        font-size: 0.7rem;
+    .leaderboard-table thead {
+        display: none;
     }
 
-    .founder-avatar {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
+    .leaderboard-table,
+    .leaderboard-table tbody,
+    .leaderboard-table tr {
+        display: block;
+        width: 100%;
     }
 
-    .founder-handle {
-        font-size: 0.7rem;
+    .leaderboard-table tr {
+        background: var(--bg-surface);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
     }
 
-    .revenue-cell,
-    .mrr-cell {
-        font-size: 0.85rem;
+    .leaderboard-table tr:hover {
+        background-color: var(--bg-surface);
+        box-shadow: var(--shadow);
+    }
+
+    .leaderboard-table td {
+        display: block;
+        padding: 0;
+        border: none;
+        text-align: left !important;
+    }
+
+    /* Card header with rank and share */
+    .leaderboard-table tr {
+        position: relative;
+    }
+
+    .rank-cell {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-main);
+        background: var(--bg-main);
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .share-cell {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: auto;
+        text-align: right;
     }
 
     .share-btn {
-        font-size: 1rem;
-        padding: 0.35rem;
+        font-size: 1.25rem;
+        padding: 0.5rem;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .empty-state {
-        padding: 2rem 1rem;
+    /* Startup info */
+    .startup-cell {
+        margin-top: 1rem;
+        padding-top: 0.5rem;
+    }
+
+    .startup-logo {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+
+    .startup-name {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .startup-url {
         font-size: 0.85rem;
     }
 
+    /* Founder info */
+    .founder-cell {
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--border);
+        gap: 0.65rem;
+    }
+
+    .founder-cell::before {
+        content: "Founder";
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+    }
+
+    .founder-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    .founder-handle {
+        font-size: 0.9rem;
+    }
+
+    /* Revenue stats */
+    .revenue-cell,
+    .mrr-cell {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        font-size: 1rem;
+    }
+
+    .revenue-cell::before {
+        content: "Revenue";
+        font-weight: 500;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .mrr-cell::before {
+        content: "MRR";
+        font-weight: 500;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .empty-state {
+        padding: 2.5rem 1.5rem;
+        font-size: 0.95rem;
+        background: var(--bg-surface);
+        border-radius: 12px;
+    }
+
     .modal-content {
-        padding: 1.5rem 1rem;
+        padding: 1.5rem;
         width: 95%;
-        max-height: 85vh;
+        max-width: 480px;
+        max-height: 90vh;
+    }
+
+    .modal-close {
+        width: 44px;
+        height: 44px;
+        font-size: 1.75rem;
+        top: 1rem;
+        right: 1rem;
     }
 
     .modal-content h2 {
         font-size: 1.5rem;
-        padding-right: 2rem;
+        padding-right: 2.5rem;
     }
 
     .modal-subtitle {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         margin-bottom: 1.5rem;
     }
 
@@ -831,54 +960,140 @@ footer a:hover {
     }
 
     .form-label {
-        font-size: 0.85rem;
-    }
-
-    .form-input {
-        padding: 0.65rem;
         font-size: 0.9rem;
     }
 
+    .form-input {
+        padding: 0.75rem;
+        font-size: 1rem;
+        min-height: 48px;
+    }
+
     .form-hint {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .submit-btn {
-        padding: 0.75rem 1.25rem;
-        font-size: 0.95rem;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+        min-height: 52px;
     }
 
     .info-notice {
-        font-size: 0.8rem;
-        padding: 0.85rem;
+        font-size: 0.85rem;
+        padding: 1rem;
+        margin-top: 1.5rem;
     }
 
     footer {
         margin-top: 3rem;
         padding-top: 1.5rem;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
 
     .footer-small {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
     }
 
     .toast {
         top: 1rem;
         right: 1rem;
         left: 1rem;
-        padding: 0.85rem 1rem;
-        font-size: 0.9rem;
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
     }
 }
 
+/* Large phones - 640px */
+@media (max-width: 640px) {
+    body {
+        padding: 0.75rem;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.875rem;
+    }
+
+    .leaderboard-table tr {
+        padding: 0.875rem;
+    }
+
+    .rank-cell {
+        top: 0.875rem;
+        left: 0.875rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.95rem;
+    }
+
+    .share-cell {
+        top: 0.875rem;
+        right: 0.875rem;
+    }
+
+    .startup-logo {
+        width: 44px;
+        height: 44px;
+        font-size: 1.35rem;
+    }
+
+    .startup-name {
+        font-size: 0.95rem;
+    }
+
+    .startup-url {
+        font-size: 0.8rem;
+    }
+
+    .founder-avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .founder-handle {
+        font-size: 0.875rem;
+    }
+
+    .revenue-cell,
+    .mrr-cell {
+        font-size: 0.95rem;
+    }
+
+    .modal-content {
+        padding: 1.25rem;
+    }
+}
+
+/* Small phones - 480px */
 @media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    header {
+        margin-bottom: 1.5rem;
+    }
+
+    .hero {
+        margin-bottom: 1.5rem;
+    }
+
     .hero h1 {
         font-size: 1.35rem;
     }
 
+    .hero-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 1.25rem;
+    }
+
     .action-buttons {
         flex-direction: column;
+        gap: 0.5rem;
     }
 
     .add-btn,
@@ -886,17 +1101,137 @@ footer a:hover {
         width: 100%;
     }
 
-    .leaderboard-table {
-        font-size: 0.75rem;
-        min-width: 550px;
+    .leaderboard-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .filter-dropdown {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.65rem;
+    }
+
+    .leaderboard-table tr {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .rank-cell {
+        top: 0.75rem;
+        left: 0.75rem;
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    .share-cell {
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .startup-cell {
+        margin-top: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .startup-logo {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
     }
 
     .startup-name {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .startup-url {
+        font-size: 0.75rem;
+    }
+
+    .founder-cell {
+        padding: 0.5rem 0;
+    }
+
+    .founder-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .founder-handle {
+        font-size: 0.85rem;
+    }
+
+    .revenue-cell,
+    .mrr-cell {
+        font-size: 0.9rem;
+    }
+
+    .revenue-cell::before,
+    .mrr-cell::before {
+        font-size: 0.85rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+        width: 100%;
+        max-height: 95vh;
+        border-radius: 12px;
     }
 
     .modal-content h2 {
         font-size: 1.35rem;
+    }
+
+    .modal-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .form-input {
+        font-size: 0.95rem;
+    }
+
+    .form-hint {
+        font-size: 0.75rem;
+    }
+
+    .submit-btn {
+        font-size: 0.95rem;
+    }
+
+    .info-notice {
+        font-size: 0.8rem;
+        padding: 0.875rem;
+    }
+
+    footer {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+    }
+}
+
+/* Extra small phones - 375px */
+@media (max-width: 375px) {
+    .hero h1 {
+        font-size: 1.25rem;
+    }
+
+    .leaderboard-table tr {
+        padding: 0.65rem;
+    }
+
+    .startup-logo {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+
+    .founder-avatar {
+        width: 28px;
+        height: 28px;
     }
 }
 
