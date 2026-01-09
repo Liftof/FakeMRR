@@ -151,18 +151,24 @@ class FakeMRR {
     }
 
     renderRow(startup, rank) {
+        const isFeatured = this.isFeatured(startup);
         const medal = this.getMedal(rank);
         const rankDisplay = medal || rank;
 
         // Get domain from website
         const domain = startup.website ? this.getDomain(startup.website) : '';
 
-        // Get favicon URL if website exists
-        const faviconUrl = startup.website ? this.getFaviconUrl(startup.website) : null;
+        // Get favicon URL - use specific logo for Palette
+        let faviconUrl;
+        if (isFeatured) {
+            faviconUrl = 'https://thepalette.app/favicon.ico';
+        } else {
+            faviconUrl = startup.website ? this.getFaviconUrl(startup.website) : null;
+        }
 
         // Generate emoji logo as fallback
         const logoEmoji = this.getCompanyEmoji(startup.companyName);
-        const logoColor = this.getCompanyColor(startup.id);
+        const logoColor = isFeatured ? '#8B5CF6' : this.getCompanyColor(startup.id);
 
         // Format twitter handle
         const twitterHandle = startup.twitter ? (startup.twitter.startsWith('@') ? startup.twitter : `@${startup.twitter}`) : '—';
@@ -172,12 +178,15 @@ class FakeMRR {
         // Get Twitter avatar URL
         const twitterAvatarUrl = twitterUsername ? `https://unavatar.io/twitter/${twitterUsername}` : null;
 
+        // Featured badge
+        const featuredBadge = isFeatured ? '<span class="featured-badge">Featured</span>' : '';
+
         return `
-            <tr>
-                <td class="rank-cell">${rankDisplay}</td>
+            <tr class="${isFeatured ? 'featured-row' : ''}">
+                <td class="rank-cell">${isFeatured ? '<span class="featured-star">&#9733;</span>' : rankDisplay}</td>
                 <td>
-                    <div class="startup-cell">
-                        <div class="startup-logo ${faviconUrl ? 'has-image' : ''}" style="background-color: ${logoColor};">
+                    <div class="startup-cell ${isFeatured ? 'featured-startup' : ''}">
+                        <div class="startup-logo ${faviconUrl ? 'has-image' : ''} ${isFeatured ? 'featured-logo' : ''}" style="background-color: ${logoColor};">
                             ${faviconUrl
                                 ? `<img src="${faviconUrl}" alt="${this.escapeHtml(startup.companyName)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                                    <span class="fallback-emoji" style="display:none;">${logoEmoji}</span>`
@@ -185,7 +194,7 @@ class FakeMRR {
                             }
                         </div>
                         <div class="startup-info">
-                            <div class="startup-name">${this.escapeHtml(startup.companyName)}</div>
+                            <div class="startup-name">${this.escapeHtml(startup.companyName)} ${featuredBadge}</div>
                             <div class="startup-url">${domain || 'No website'}</div>
                         </div>
                     </div>
@@ -226,7 +235,7 @@ class FakeMRR {
     }
 
     getSortedStartups(startups) {
-        return [...startups].sort((a, b) => {
+        const sorted = [...startups].sort((a, b) => {
             switch(this.currentSort) {
                 case 'revenue':
                     return b.totalRevenue - a.totalRevenue;
@@ -238,6 +247,19 @@ class FakeMRR {
                     return 0;
             }
         });
+
+        // Always put Palette first (featured)
+        const paletteIndex = sorted.findIndex(s => s.companyName.toLowerCase() === 'palette');
+        if (paletteIndex > 0) {
+            const [palette] = sorted.splice(paletteIndex, 1);
+            sorted.unshift(palette);
+        }
+
+        return sorted;
+    }
+
+    isFeatured(startup) {
+        return startup.companyName.toLowerCase() === 'palette';
     }
 
     getMedal(rank) {
