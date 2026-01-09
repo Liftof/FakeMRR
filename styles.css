@@ -456,6 +456,8 @@ header {
 .featured-row {
     background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #DDD6FE 100%);
     position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .featured-row:hover {

@@ -158,10 +158,10 @@ class FakeMRR {
         // Get domain from website
         const domain = startup.website ? this.getDomain(startup.website) : '';
 
-        // Get favicon URL - use specific logo for Palette
+        // Get favicon URL - use local logo for Palette
         let faviconUrl;
         if (isFeatured) {
-            faviconUrl = 'https://thepalette.app/favicon.ico';
+            faviconUrl = '/palette-logo.png';
         } else {
             faviconUrl = startup.website ? this.getFaviconUrl(startup.website) : null;
         }
@@ -181,8 +181,11 @@ class FakeMRR {
         // Featured badge
         const featuredBadge = isFeatured ? '<span class="featured-badge">Featured</span>' : '';
 
+        // Make featured row clickable
+        const rowClick = isFeatured ? 'onclick="window.open(\'https://thepalette.app\', \'_blank\')"' : '';
+
         return `
-            <tr class="${isFeatured ? 'featured-row' : ''}">
+            <tr class="${isFeatured ? 'featured-row' : ''}" ${rowClick}>
                 <td class="rank-cell">${isFeatured ? '<span class="featured-star">&#9733;</span>' : rankDisplay}</td>
                 <td>
                     <div class="startup-cell ${isFeatured ? 'featured-startup' : ''}">
